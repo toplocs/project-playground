@@ -12,10 +12,10 @@ export class Example implements ExampleInterface {
   name: string;
   description: string;
 
-  constructor(data: { id?: Uuid; name: string; description: string }) {
+  constructor(data: { id?: Uuid; name?: string; description?: string } = {}) {
     this.id = data.id || '';
-    this.name = data.name;
-    this.description = data.description;
+    this.name = data.name || '';
+    this.description = data.description || '';
   }
 
   static async fetchAll(): Promise<Example[]> {

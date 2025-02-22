@@ -5,15 +5,15 @@
     <div v-if="!loading && !error">
       <h1>Examples</h1>
 
-      <input v-model="newExampleName" placeholder="Name" />
-      <input v-model="newExampleDescription" placeholder="Description" />
+      <input v-model="newExample.name" placeholder="Name" />
+      <input v-model="newExample.description" placeholder="Description" />
       <button @click="createExample">Create New Example</button>
 
       <ExampleListItem v-for="example in exampleList.examples" 
         :key="example.id" 
         :example="example" 
-        @example-updated="updateExample" 
-        @example-deleted="removeExample"
+        @example-updated="updateExampleInList" 
+        @example-deleted="removeExampleFromList"
       />
     </div>
   </div>
@@ -29,8 +29,7 @@ import ExampleListItem from './ExampleListItem.vue';
 const loading = ref(false);
 const error= ref<string | null>(null);
 const exampleList = ref<ExampleList>(new ExampleList());
-const newExampleName = ref('');
-const newExampleDescription = ref('');
+const newExample = ref<Example>(new Example());
 
 onMounted(async () => {
   await fetchExamples();
@@ -50,23 +49,20 @@ const fetchExamples = async () => {
 
 const createExample = async () => {
   try {
-    const newExample = new Example({
-      name: newExampleName.value,
-      description: newExampleDescription.value
-    });
-    const createdExample = await exampleList.value.create(newExample);
-    newExampleName.value = '';
-    newExampleDescription.value = '';
+    console.log("Create this:", newExample.value);
+    await exampleList.value.create(newExample.value);
+    newExample.value.name = '';
+    newExample.value.description = '';
   } catch (err) {
     console.error('Failed to create example', err);
   }
 };
 
-const updateExample = async (example: Example) => {
+const updateExampleInList = async (example: Example) => {
   exampleList.value.replace(example);
 };
 
-const removeExample = async (id: Uuid) => {
+const removeExampleFromList = async (id: Uuid) => {
   exampleList.value.remove(id);
 };
 </script>
