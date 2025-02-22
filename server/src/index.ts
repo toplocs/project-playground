@@ -30,6 +30,17 @@ app.get('/api/example', (req, res) => {
     res.send(exampleData);
 });
 
+app.get('/api/example/:id', (req, res) => {
+    const { id } = req.params;
+    const index = exampleData.findIndex(item => item.id === id);
+    console.log("GET ", id, index);
+    if (index !== -1) {
+        res.send(exampleData[index]);
+    } else {
+        res.status(404).send({ message: `Data with id ${id} not found` });
+    }
+});
+
 app.post('/api/example', (req, res) => {
     const data: Example = req.body;
     data.id = Math.random().toString(36).substring(7);

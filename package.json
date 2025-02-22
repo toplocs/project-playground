@@ -1,8 +1,7 @@
 {
-  "name": "fe",
+  "name": "project-playground",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Play with concepts",
   "scripts": {
     "dev": "pnpm -F server dev & pnpm -F client dev",
     "test": "pnpm -F client test"
