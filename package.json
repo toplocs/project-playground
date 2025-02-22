@@ -1,0 +1,13 @@
+{
+  "name": "fe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm -F server dev & pnpm -F client dev",
+    "test": "pnpm -F client test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

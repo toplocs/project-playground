@@ -1,0 +1,12 @@
+[
+  {
+    "id": "1",
+    "name": "Example Object 1",
+    "description": "This is the first example object."
+  },
+  {
+    "id": "2",
+    "name": "Example Object 2",
+    "description": "This is the second example object."
+  }
+]
