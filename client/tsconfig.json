@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": true,
+    // "verbatimModuleSyntax": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "outDir": "./dist", // Output directory overwritten by vite
