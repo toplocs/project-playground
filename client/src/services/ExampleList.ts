@@ -3,7 +3,7 @@
  * @module ExampleList
  */
 
-import type { Uuid } from "@/types/uuid";
+import type { Uuid } from "@playground/types/uuid";
 import { Example } from '@/services/Example';
 
 export class ExampleList {

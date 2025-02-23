@@ -13,13 +13,12 @@
     "verbatimModuleSyntax": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "outDir": "../dist/client",
+    "outDir": "./dist", // Output directory overwritten by vite
     "baseUrl": ".",
     "lib": ["esnext", "dom"],
     "types": ["vite/client", "vue"],
     "paths": {
       "@/*": ["./src/*"],
-      "@/types/*": ["../types/*"],
       "@/components/*": ["./src/components/*"],
       "@/views/*": ["./src/views/*"]
     }
@@ -27,9 +26,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "../types/**/*.ts"
+    "src/**/*.vue"
   ],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
