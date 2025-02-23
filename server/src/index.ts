@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
 app.use(morgan('dev'));
 app.use(express.json());
 
-const clientDistPath = path.join(__dirname, '../../client/dist');
+const clientDistPath = path.join(__dirname, '../../../client/dist');
 if (fs.existsSync(clientDistPath)) {
   app.use(express.static(clientDistPath));
 } else {
