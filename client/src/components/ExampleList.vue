@@ -21,10 +21,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { Uuid } from '../../../types/uuid';
-import { Example } from '../services/Example';
-import { ExampleList } from '../services/ExampleList';
-import ExampleListItem from './ExampleListItem.vue';
+import type { Uuid } from '@/types/uuid';
+import { Example } from '@/services/Example';
+import { ExampleList } from '@/services/ExampleList';
+import ExampleListItem from '@/components/ExampleListItem.vue';
 
 const loading = ref(false);
 const error= ref<string | null>(null);

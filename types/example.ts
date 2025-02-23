@@ -1,4 +1,4 @@
-import { Uuid } from "./uuid";
+import type { Uuid } from "@/types/uuid";
 
 export interface Example {
     id: Uuid;

@@ -1,14 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "strict": true,
+    "sourceMap": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "outDir": "../dist/client",
     "baseUrl": ".",
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client", "vue"],
     "paths": {
       "@/*": ["./src/*"],
       "@/types/*": ["../types/*"],
@@ -16,6 +24,12 @@
       "@/views/*": ["./src/views/*"]
     }
   },
-  "include": ["src/**/*", "../types/**/*"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "../types/**/*.ts"
+  ],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

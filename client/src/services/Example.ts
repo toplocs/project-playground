@@ -4,8 +4,8 @@
  */
 
 import axios from 'axios';
-import { Uuid } from "../../../types/uuid";
-import { Example as ExampleInterface } from '../../../types/example';
+import type { Uuid } from "@/types/uuid";
+import type { Example as ExampleInterface } from '@/types/example';
 
 export class Example implements ExampleInterface {
   id: Uuid;
