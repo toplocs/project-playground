@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { Example } from '../../types/example';
+import { Example } from '@playground/types/example';
 
 const exampleDataPath = path.join(__dirname, '..', 'data', 'exampleData.json');
 

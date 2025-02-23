@@ -1,25 +1,32 @@
 <template>
-  <div class="example-item">
-    <div @dblclick="editName">
+  <div class="p-4 rounded shadow max-w-md">
+    <div class="font-bold text-xl mb-2" @dblclick="editName">
       <h2 v-if="!isEditingName">{{ editableExample.name }}</h2>
       <input 
         v-else
         v-model="editableExample.name" 
         @blur="updateExample" 
+        @keyup.enter="updateExample"
         ref="nameInput"
       />
     </div>
-    <div @dblclick="editDescription">
-      <p v-if="!isEditingDescription">{{ editableExample.description }}</p>
-      <textarea 
-        v-else 
-        v-model="editableExample.description" 
-        @blur="updateExample" 
-        ref="descriptionInput">
-      </textarea>
+    <div @dblclick="editDescription" class="relative grid">
+      <pre v-if="!isEditingDescription">{{ editableExample.description }}</pre>
+      <div v-else>
+        <textarea class="w-full resize-none overflow-hidden"
+          v-model="editableExample.description" 
+          @blur="updateExample" 
+          ref="descriptionInput"
+        >
+        </textarea>
+      </div>
     </div>
-    <button @click="fetchExample">Refresh</button>
-    <button @click="deleteExample">Delete</button>
+    <div class="flex gap-4 p-2">
+      <button class="bg-blue-500 text-white p-2 block mt-4"
+        @click="fetchExample">Refresh</button>
+      <button class="bg-blue-500 text-white p-2 block mt-4"
+        @click="deleteExample">Delete</button>
+    </div>
   </div>
 </template>
 

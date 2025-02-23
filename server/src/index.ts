@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import { Example } from '../../types/example';
+import { Example } from '@playground/types/example';
 import { exampleData, loadExampleData } from './dataLoader';
+import path from 'path';
+import fs from 'fs';
 
 loadExampleData();
 
@@ -22,9 +24,14 @@ app.use(function(req, res, next) {
 app.use(morgan('dev'));
 app.use(express.json());
 
-app.get('/api', (req, res) => {
-  res.send('Hello World!');
-});
+const clientDistPath = path.join(__dirname, '../../client/dist');
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+} else {
+  app.get('/', (req, res) => {
+    res.send(`Client build folder does not exist. Not serving client`);
+  });
+}
 
 app.get('/api/example', (req, res) => {
     res.send(exampleData);

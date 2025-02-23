@@ -1,15 +1,16 @@
 {
-  "name": "project-playground",
+  "name": "@playground/project",
   "version": "1.0.0",
-  "description": "Play with concepts",
+  "description": "Playground for concepts",
   "scripts": {
     "dev": "pnpm -F server dev & pnpm -F client dev",
     "test": "pnpm -F client test",
-    "check": "pnpm -F client check",
-    "lint": "pnpm -F client lint",
-    "build": "pnpm -F client build"
+    "check": "pnpm -F !root check",
+    "lint": "pnpm -F !root lint",
+    "build": "pnpm -F !root build",
+    "start": "pnpm -F server start"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }

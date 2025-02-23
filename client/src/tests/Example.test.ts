@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { afterEach, describe, expect, it, jest } from '@jest/globals';
 import { Example } from '@/services/Example';
-import type { Uuid } from '@/types/uuid';
+import type { Uuid } from '@playground/types/uuid';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
