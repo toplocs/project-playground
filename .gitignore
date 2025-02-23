@@ -4,9 +4,8 @@ node_modules/
 /server/node_modules/
 
 # Production build
-/build
-/build/client
-/build/server
+/client/dist
+/server/dist
 /dist
 
 # Environment variables

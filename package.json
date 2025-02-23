@@ -4,7 +4,10 @@
   "description": "Play with concepts",
   "scripts": {
     "dev": "pnpm -F server dev & pnpm -F client dev",
-    "test": "pnpm -F client test"
+    "test": "pnpm -F client test",
+    "check": "pnpm -F client check",
+    "lint": "pnpm -F client lint",
+    "build": "pnpm -F client build"
   },
   "keywords": [],
   "author": "",

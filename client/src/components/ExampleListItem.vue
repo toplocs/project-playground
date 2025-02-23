@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { Example } from '../services/Example';
-import { PropType } from 'vue';
+import { Example } from '@/services/Example';
+import type { PropType } from 'vue';
 import { ref, watch, nextTick } from 'vue';
 
 const props = defineProps({

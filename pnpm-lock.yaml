@@ -10,6 +10,9 @@ importers:
 
   client:
     dependencies:
+      '@jest/globals':
+        specifier: ^29.7.0
+        version: 29.7.0
       axios:
         specifier: ^1.7.9
         version: 1.7.9
@@ -30,7 +33,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(typescript@5.4.5)
       '@vitejs/plugin-vue':
-        specifier: ^5.0.5
+        specifier: ^5.2.1
         version: 5.2.1(vite@5.4.14(@types/node@20.17.19))(vue@3.5.13(typescript@5.4.5))
       jest:
         specifier: ^29.7.0
@@ -45,7 +48,7 @@ importers:
         specifier: ^5.3.1
         version: 5.4.14(@types/node@20.17.19)
       vue-tsc:
-        specifier: ^2.0.21
+        specifier: ^2.2.2
         version: 2.2.2(typescript@5.4.5)
 
   server:

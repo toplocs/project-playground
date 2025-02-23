@@ -3,9 +3,8 @@
  * @module ExampleList
  */
 
-import axios from 'axios';
-import { Uuid } from "../../../types/uuid";
-import { Example } from './Example';
+import type { Uuid } from "@/types/uuid";
+import { Example } from '@/services/Example';
 
 export class ExampleList {
   examples: Example[] = [];
