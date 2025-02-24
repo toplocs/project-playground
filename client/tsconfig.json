@@ -20,13 +20,15 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/components/*": ["./src/components/*"],
-      "@/views/*": ["./src/views/*"]
+      "@/views/*": ["./src/views/*"],
+      "@/utils/*": ["./src/utils/*"]
     }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "src/**/*.vue"
+    "src/**/*.vue", 
+    "../types/"
   ],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

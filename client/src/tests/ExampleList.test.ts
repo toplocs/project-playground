@@ -28,7 +28,7 @@ describe('ExampleList service', () => {
     const exampleList = new ExampleList();
     const newExample = await exampleList.create({ name: 'New Example', description: 'New description' });
     expect(newExample).toEqual(newExampleData);
-    expect(exampleList.examples).toContainEqual(newExampleData);
+    expect(exampleList.items).toContainEqual(newExampleData);
   });
 
   it('should update an example', async () => {
@@ -36,7 +36,7 @@ describe('ExampleList service', () => {
     let example = new Example(exampleData);
     example.name = "Old Name";
     const exampleList = new ExampleList();
-    exampleList.examples = [example];
+    exampleList.items = [example];
     example.name = exampleData.name;
     const updatedExample = await exampleList.update(example);
     expect(updatedExample).toEqual(exampleData);
@@ -45,8 +45,8 @@ describe('ExampleList service', () => {
   it('should delete an example', async () => {
     mockedAxios.delete.mockResolvedValue({});
     const exampleList = new ExampleList();
-    exampleList.examples = [new Example(exampleData)];
+    exampleList.items = [new Example(exampleData)];
     await exampleList.delete(exampleData.id);
-    expect(exampleList.examples).not.toContainEqual(exampleData);
+    expect(exampleList.items).not.toContainEqual(exampleData);
   });
 });
