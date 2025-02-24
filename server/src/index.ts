@@ -1,19 +1,54 @@
 import express from 'express';
+import session from 'express-session';
 import cors from 'cors';
 import morgan from 'morgan';
-import { Example } from '@playground/types/example';
-import { exampleData, loadExampleData } from './dataLoader';
 import path from 'path';
 import fs from 'fs';
+import https from "https";
+import http from "http";
 
-loadExampleData();
+import { corsOptions, port, origin, rpID, enable_https } from './configs';
+import { handleError } from './errors';
 
-const port = process.env.PORT || 3000;
-const corsOptions: cors.CorsOptions = {
-  origin: '*'
-};
+// Routes
+import userRoutes from './routes/userRoutes';
+import passkeyRoutes from './routes/passkeyRoutes';
+import exampleRoutes from './routes/exampleRoutes';
+import profileRoutes from './routes/profileRoutes';
+// Models
+import UserModel from './models/User';
+import ProfileModel from './models/Profile';
+import ExampleModel from './models/Example';
+import ProfileExampleModel from './models/ProfileExample';
+
+// Trying to fix Error MissingWebCrypto
+// https://github.com/MasterKale/SimpleWebAuthn/issues/517
+// import { webcrypto } from "node:crypto";
+// export const crypto: Crypto = webcrypto as any;
+// globalThis.crypto ??= await import("node:crypto").webcrypto
 
 const app = express();
+
+declare module 'express-session' {
+  interface SessionData {
+    currentChallengeOptions?: PublicKeyCredentialCreationOptionsJSON | PublicKeyCredentialRequestOptionsJSON;
+    loggedInUser: {id: string, name: string} | null;
+  }
+}
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'secret',
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+      maxAge: 86400000,
+      httpOnly: true, // Ensure to not expose session cookies to clientside scripts
+    },
+  }),
+);
+
+// TODO: Combine CORS settings for cleaner code
 app.use(cors(corsOptions));
 app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*');
@@ -21,10 +56,18 @@ app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 });
+
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(handleError);
 
-const clientDistPath = path.join(__dirname, '../../../client/dist');
+app.use('/api/passkey', passkeyRoutes);
+app.use('/api/example', exampleRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/user', userRoutes);
+
+const clientDistPath = path.join(__dirname, '../../client/dist');
+console.log(clientDistPath);
 if (fs.existsSync(clientDistPath)) {
   app.use(express.static(clientDistPath));
 } else {
@@ -33,51 +76,25 @@ if (fs.existsSync(clientDistPath)) {
   });
 }
 
-app.get('/api/example', (req, res) => {
-    res.send(exampleData);
-});
+// app.listen(port, () => {
+//     console.log(`Server is running on http://localhost:${port}`);
+// });
 
-app.get('/api/example/:id', (req, res) => {
-    const { id } = req.params;
-    const index = exampleData.findIndex(item => item.id === id);
-    console.log("GET ", id, index);
-    if (index !== -1) {
-        res.send(exampleData[index]);
-    } else {
-        res.status(404).send({ message: `Data with id ${id} not found` });
-    }
-});
-
-app.post('/api/example', (req, res) => {
-    const data: Example = req.body;
-    data.id = Math.random().toString(36).substring(7);
-    exampleData.push(data);
-    res.send(data);
-});
-
-app.put('/api/example/:id', (req, res) => {
-    const { id } = req.params;
-    const data: Example = req.body;
-    const index = exampleData.findIndex(item => item.id === id);
-    if (index !== -1) {
-        exampleData[index] = data;
-        res.send(data);
-    } else {
-        res.status(404).send({ message: `Data with id ${id} not found` });
-    }
-});
-
-app.delete('/api/example/:id', (req, res) => {
-    const { id } = req.params;
-    const index = exampleData.findIndex(item => item.id === id);
-    if (index !== -1) {
-        exampleData.splice(index, 1);
-        res.send({ message: `DELETE request to the example endpoint with id ${id}` });
-    } else {
-        res.status(404).send({ message: `Data with id ${id} not found` });
-    }
-});
-
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
+const host = "0.0.0.0";
+if (enable_https) {
+  https
+    .createServer(
+      {
+        key: fs.readFileSync(`./${rpID}.key`),
+        cert: fs.readFileSync(`./${rpID}.crt`),
+      },
+      app
+    )
+    .listen(port, host, () => {
+      console.log(`🚀 Server ready at ${origin} (${host}:${port})`);
+    });
+} else {
+  http.createServer(app).listen(port, host, () => {
+    console.log(`🚀 Server ready at ${origin} (${host}:${port})`);
+  });
+}

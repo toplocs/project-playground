@@ -16,35 +16,35 @@ describe('Example class', () => {
 
   it('should fetch all examples', async () => {
     mockedAxios.get.mockResolvedValue({ data: [exampleData] });
-    const examples = await Example.fetchAll();
+    const examples = await Example.FetchAll();
     expect(examples).toEqual([exampleData]);
     expect(examples.every(example => example instanceof Example)).toBe(true);
   });
 
   it('should get an example by id', async () => {
     mockedAxios.get.mockResolvedValue({ data: exampleData });
-    const example = await Example.get('1' as Uuid);
+    const example = await Example.Get('1' as Uuid);
     expect(example).toEqual(exampleData);
     expect(example).toBeInstanceOf(Example);
   });
 
   it('should create a new example', async () => {
     mockedAxios.post.mockResolvedValue({ data: exampleData });
-    const example = await Example.create({ name: 'Test', description: 'Test description' });
+    const example = await Example.Create({ name: 'Test', description: 'Test description' });
     expect(example).toEqual(exampleData);
     expect(example).toBeInstanceOf(Example);
   });
 
   it('should update an example', async () => {
     mockedAxios.put.mockResolvedValue({ data: exampleData });
-    const example = await Example.update('1' as Uuid, { name: 'Updated', description: 'Updated description' });
+    const example = await Example.Update('1' as Uuid, { name: 'Updated', description: 'Updated description' });
     expect(example).toEqual(exampleData);
     expect(example).toBeInstanceOf(Example);
   });
 
   it('should delete an example', async () => {
     mockedAxios.delete.mockResolvedValue({});
-    await Example.delete('1' as Uuid);
+    await Example.Delete('1' as Uuid);
     expect(axios.delete).toHaveBeenCalledWith('/api/example/1');
   });
 
