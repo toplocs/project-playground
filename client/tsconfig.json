@@ -10,7 +10,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    // "verbatimModuleSyntax": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "outDir": "./dist", // Output directory overwritten by vite
@@ -20,13 +19,15 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/components/*": ["./src/components/*"],
-      "@/views/*": ["./src/views/*"]
+      "@/views/*": ["./src/views/*"],
+      "@/utils/*": ["./src/utils/*"]
     }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "src/**/*.vue"
+    "src/**/*.vue", 
+    "../types/"
   ],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

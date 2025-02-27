@@ -13,7 +13,7 @@
           @click="createExample">Add</button>
       </div>
       
-      <ExampleListItem v-for="example in exampleList.examples" 
+      <ExampleListItem v-for="example in exampleList.items" 
         :key="example.id" 
         :example="example" 
         @example-updated="updateExampleInList" 
