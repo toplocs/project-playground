@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:https": "vite -- --https",
     "test": "jest",
     "check": "vue-tsc --noEmit",
     "lint": "eslint --ext .ts,.js,.vue .",

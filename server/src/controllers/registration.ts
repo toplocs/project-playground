@@ -66,7 +66,7 @@ export const handleRegisterFinish = async (req: Request, res: Response, next: Ne
         const verification = await verifyRegistrationResponse({
             response: body as RegistrationResponseJSON,
             expectedChallenge: currentChallenge,
-            expectedOrigin: [origin, "http://localhost:3000", "http://localhost:5173"],
+            expectedOrigin: origin,
             expectedRPID: [rpID, "localhost"],
             requireUserVerification: false,
         });
