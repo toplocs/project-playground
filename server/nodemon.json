@@ -1,3 +1,7 @@
 {   
-    "ignore": ["data", "dist", "README"] 
+    "ignore": ["data", "dist", "README"], 
+    "verbose": true,
+    "ext": "ts",
+    "watch": ["src"],
+    "exec": "ts-node ./src/index.ts"
 }
