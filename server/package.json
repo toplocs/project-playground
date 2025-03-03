@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
+    "dev:watch": "tsc-watch --onSuccess \"ts-node ./src/index.ts\"",
     "test": "echo \"Info: no test specified\" && exit 0",
     "check": "tsc --noEmit",
     "lint": "eslint --ext .ts .",
@@ -11,22 +12,23 @@
   },
   "dependencies": {
     "@playground/types": "workspace:*",
+    "@simplewebauthn/server": "^13.1.1",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "express-session": "^1.17.2",
     "morgan": "^1.10.0",
-    "@simplewebauthn/server": "^13.1.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@simplewebauthn/typescript-types": "^8.3.4",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.17.10",
     "@types/morgan": "^1.9.9",
     "@types/uuid": "^9.0.0",
-    "@simplewebauthn/typescript-types": "^8.3.4",
-    "nodemon": "^3.1.9",
     "eslint": "^9.21.0",
+    "nodemon": "^3.1.9",
+    "tsc-watch": "^6.2.1",
     "typescript": "^5.7.3"
   }
 }
