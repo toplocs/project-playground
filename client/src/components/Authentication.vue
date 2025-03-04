@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Register</h1>
+    <h1>Authenticate Please</h1>
     <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
     <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p>
     <div class="flex gap-4 p-2">
@@ -80,7 +80,7 @@ async function login() {
     if (verificationResponse.status === 200) {
       successMessage.value = 'Login successful';
       const data = verificationResponse.data;
-      emit('login-success', data.userId);
+      emit('login-success', data.userId, data.token);
     } else {
       errorMessage.value = 'Login failed';
     }

@@ -2,9 +2,6 @@ import axios from 'axios';
 import type { Uuid, GenericObject } from '@playground/types/uuid';
     
 export class GenericService<T extends GenericObject> {
-    fetchAll(): T[] | PromiseLike<T[]> {
-        throw new Error('Method not implemented.');
-    }
     static apiRoute: string;
     id: Uuid;
 
@@ -13,20 +10,20 @@ export class GenericService<T extends GenericObject> {
     }
 
     static async FetchAll<T>(): Promise<T[]> {
-        const response = await axios.get<T[]>(`${this.apiRoute}`);
+        const response = await axios.get<T[]>(`${this.apiRoute}s`);
         response.data = response.data.map(item => new this(item as GenericObject)) as T[];
         return response.data;
+    }
+
+    static async Create<T>(data: Partial<T>): Promise<T> {
+        const response = await axios.post<T>(`${this.apiRoute}s`, data);
+        return new this(response.data as GenericObject) as T;
     }
 
     static async Get<T>(id: Uuid): Promise<T> {
         const response = await axios.get<T>(`${this.apiRoute}/${id}`);
         response.data = new this(response.data as GenericObject) as T;
         return response.data;
-    }
-
-    static async Create<T>(data: Partial<T>): Promise<T> {
-        const response = await axios.post<T>(`${this.apiRoute}`, data);
-        return new this(response.data as GenericObject) as T;
     }
 
     static async Update<T>(id: Uuid, data: Partial<T>): Promise<T> {
