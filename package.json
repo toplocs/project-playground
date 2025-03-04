@@ -4,11 +4,14 @@
   "description": "Playground for concepts",
   "scripts": {
     "dev": "pnpm -F server dev & pnpm -F client dev",
+    "dev:https": "pnpm -F server dev:https & pnpm -F client dev:https",
     "test": "pnpm -F client test",
     "check": "pnpm -F !root check",
     "lint": "pnpm -F !root lint",
     "build": "pnpm -F !root build",
-    "start": "pnpm -F server start"
+    "start": "pnpm -F server start",
+    "certs": "mkcert 'localhost'",
+    "clear": "rm -rf server/data/sessions/*"
   },
   "keywords": [],
   "author": "",

@@ -29,10 +29,11 @@ export const handleLoginStart = async (req: Request, res: Response, next: NextFu
             // })),
             userVerification: 'preferred',
         });
-        console.log("Options", options);
+        // console.log("Options", options);
 
         req.session.loggedInUser = { id: user.id, name: user.username };
         req.session.currentChallengeOptions = options;
+        // console.log("Session", req.session);
         res.send(options);
     } catch (error) {
         next(error instanceof CustomError ? error : new CustomError('Internal Server Error', 500));
@@ -41,6 +42,11 @@ export const handleLoginStart = async (req: Request, res: Response, next: NextFu
 
 export const handleLoginFinish = async (req: Request, res: Response, next: NextFunction) => {
     const { body } = req;
+
+    // console.log("Body", body);
+    // console.log("Session", req.session);
+    // console.log("SessionID", req.session.id);
+    
 
     if (!req.session.currentChallengeOptions) {
         return next(new CustomError('Current challenge is missing', 400));
@@ -64,11 +70,11 @@ export const handleLoginFinish = async (req: Request, res: Response, next: NextF
 
     // console.log("PK", (userPasskey as Credential).publicKeyUint8());
 
-    try {
-        let verification = await verifyAuthenticationResponse({
+    // try {
+        const authenticationResponse = {
             response: body,
             expectedChallenge: currentChallenge,
-            expectedOrigin: [origin, "http://localhost:3000", "http://localhost:5173"],
+            expectedOrigin: origin,
             expectedRPID: [rpID, "localhost"],
             credential: {
                 id: userPasskey.id,
@@ -76,7 +82,9 @@ export const handleLoginFinish = async (req: Request, res: Response, next: NextF
                 counter: userPasskey.counter,
                 transports: userPasskey.transports,
             },
-        });
+        };
+        let verification = await verifyAuthenticationResponse(authenticationResponse);
+        // console.log("Verification", verification);
 
         const { verified, authenticationInfo } = verification;
 
@@ -89,10 +97,24 @@ export const handleLoginFinish = async (req: Request, res: Response, next: NextF
         } else {
             next(new CustomError('Verification failed', 400));
         }
-    } catch (error) {
-        next(error instanceof CustomError ? error : new CustomError('Internal Server Error' + error, 500));
-    } finally {
-        req.session.currentChallengeOptions = undefined;
-        req.session.loggedInUser = undefined;
-    }
+    // } catch (error) {
+    //     next(error instanceof CustomError ? error : new CustomError('Internal Server Error' + error, 500));
+    // } finally {
+        // req.session.currentChallengeOptions = undefined;
+        // req.session.loggedInUser = undefined;
+    // }
+};
+
+export const handleLogout = async (req: Request, res: Response) => {
+  try {
+    req.session.loggedInUser = undefined;
+    req.session.destroy(err => {
+      if (err) {
+        return res.status(500).send({ message: 'Logout failed', error: err });
+      }
+      res.status(200).send({ message: 'Logout successful' });
+    });
+  } catch (error) {
+    res.status(500).send({ message: 'Logout failed', error });
+  }
 };
