@@ -1,15 +1,30 @@
 import { Router } from 'express';
 import { Example } from '@playground/types/example';
-import { examples } from '../models/Example';
+import { examples } from '../../models/Example';
+import { authenticate } from '../../middleware/authenticate';
 
 
 const router = Router();
+const examplesRouter = Router();
+const exampleRouter = Router();
+router.use('/examples', examplesRouter);
+router.use('/example', exampleRouter);
 
-router.get('/', (req, res) => {
-    res.send(examples.getAll());
+export default router;
+
+examplesRouter.get('/', (req, res) => {
+    const userId = req.session.loggedInUser;
+    const all = examples.getAll()
+    res.send(all);
 });
 
-router.get('/:id', (req, res) => {
+examplesRouter.post('/', (req, res) => {
+    const data: Example = req.body;
+    const newExample = examples.add(data);
+    res.status(201).send(newExample);
+});
+
+exampleRouter.get('/:id', (req, res) => {
     const { id } = req.params;
     const example = examples.getById(id);
     if (example) {
@@ -19,13 +34,7 @@ router.get('/:id', (req, res) => {
     }
 });
 
-router.post('/', (req, res) => {
-    const data: Example = req.body;
-    const newExample = examples.add(data);
-    res.send(newExample);
-});
-
-router.put('/:id', (req, res) => {
+exampleRouter.put('/:id', (req, res) => {
     const { id } = req.params;
     const data: Example = req.body;
     const updatedExample = examples.update(id, data);
@@ -36,7 +45,7 @@ router.put('/:id', (req, res) => {
     }
 });
 
-router.delete('/:id', (req, res) => {
+exampleRouter.delete('/:id', (req, res) => {
     const { id } = req.params;
     const success = examples.delete(id);
     if (success) {
@@ -46,4 +55,3 @@ router.delete('/:id', (req, res) => {
     }
 });
 
-export default router;

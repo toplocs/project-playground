@@ -77,6 +77,9 @@ importers:
       express-session:
         specifier: ^1.17.2
         version: 1.18.1
+      express-version-route:
+        specifier: ^1.2.4
+        version: 1.2.4
       http-proxy:
         specifier: ^1.18.1
         version: 1.18.1
@@ -102,6 +105,9 @@ importers:
       '@types/express-session':
         specifier: ^1.17.10
         version: 1.18.1
+      '@types/express-version-route':
+        specifier: ^1.0.4
+        version: 1.0.4
       '@types/http-proxy':
         specifier: ^1.17.16
         version: 1.17.16
@@ -777,6 +783,9 @@ packages:
   '@types/express-session@1.18.1':
     resolution: {integrity: sha512-S6TkD/lljxDlQ2u/4A70luD8/ZxZcrU5pQwI1rVXCiaVIywoFgbA+PIUNDjPhQpPdK0dGleLtYc/y7XWBfclBg==}
 
+  '@types/express-version-route@1.0.4':
+    resolution: {integrity: sha512-gPDU4LiuN3iCvcYdWaZlTEer6D5np4wupqEi9H4UrqgnBS8pdtA7VA6JNEVe+mAxbovNjk0h8LThbuj0WHzvRg==}
+
   '@types/express@5.0.0':
     resolution: {integrity: sha512-DvZriSMehGHL1ZNLzi6MidnsDhUZM/x2pRdDIKdwbUNqqwHxMlRdkxtn6/EPKyqKpHqTl/4nRZsRNLpZxZRpPQ==}
 
@@ -1365,6 +1374,9 @@ packages:
   express-session@1.18.1:
     resolution: {integrity: sha512-a5mtTqEaZvBCL9A9aqkrtfz+3SMDhOVUnjafjo+s7A9Txkq+SVX2DLvSp1Zrv4uCXa3lMSK3viWnh9Gg07PBUA==}
     engines: {node: '>= 0.8.0'}
+
+  express-version-route@1.2.4:
+    resolution: {integrity: sha512-MhciKG12Ef4fw0MfvKmUJES9X7/vfHhNBv9ryHr5n57I+muS3ZCGGOZeeIIems0pgLFzjWbpzVRWFGJ3vbNFDQ==}
 
   express@4.21.2:
     resolution: {integrity: sha512-28HqgMZAmih1Czt9ny7qr6ek2qddF4FclbMzwhCREB6OFfH+rXAnuNCwo1/wFvrtbgsQDb4kSbX9de9lFbrXnA==}
@@ -3230,6 +3242,10 @@ snapshots:
     dependencies:
       '@types/express': 5.0.0
 
+  '@types/express-version-route@1.0.4':
+    dependencies:
+      '@types/express': 5.0.0
+
   '@types/express@5.0.0':
     dependencies:
       '@types/body-parser': 1.19.5
@@ -3921,6 +3937,10 @@ snapshots:
       uid-safe: 2.1.5
     transitivePeerDependencies:
       - supports-color
+
+  express-version-route@1.2.4:
+    dependencies:
+      semver: 6.3.1
 
   express@4.21.2:
     dependencies:

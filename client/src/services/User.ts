@@ -9,7 +9,7 @@ import type { User as UserInterface } from '@playground/types/user';
 import type { Profile } from '@playground/types/profile';
 
 export class User extends GenericService<UserInterface> {
-  static apiRoute = '/api/user';
+  static apiRoute = '/api/v2/user';
   id: Uuid;
   username: string;
   email?: string;

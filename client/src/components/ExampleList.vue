@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, getCurrentInstance } from 'vue';
 import type { Uuid } from '@playground/types/uuid';
 import { Example } from '@/services/Example';
 import { ExampleList } from '@/services/ExampleList';
@@ -36,6 +36,9 @@ const exampleList = ref<ExampleList>(new ExampleList());
 const newExample = ref<Example>(new Example());
 
 onMounted(async () => {
+  const instance = getCurrentInstance();
+  const profileId = instance?.props.profileId;
+  console.log('ExampleList instance:', instance?.vnode.key);
   await fetchExamples();
 });
 
