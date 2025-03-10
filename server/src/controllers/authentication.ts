@@ -5,6 +5,7 @@ import { credentials, Credential } from '../models/Credential';
 import { users } from '../models/User';
 import { CustomError } from '../errors';
 import { rpID, origin } from '../configs';
+import Auth from '../models/Auth';
 
 export const handleLoginStart = async (req: Request, res: Response, next: NextFunction) => {
     const { username } = req.body;
@@ -29,11 +30,9 @@ export const handleLoginStart = async (req: Request, res: Response, next: NextFu
             // })),
             userVerification: 'preferred',
         });
-        // console.log("Options", options);
 
         req.session.loggedInUser = { id: user.id, name: user.username };
         req.session.currentChallengeOptions = options;
-        // console.log("Session", req.session);
         res.send(options);
     } catch (error) {
         next(error instanceof CustomError ? error : new CustomError('Internal Server Error', 500));
@@ -42,11 +41,6 @@ export const handleLoginStart = async (req: Request, res: Response, next: NextFu
 
 export const handleLoginFinish = async (req: Request, res: Response, next: NextFunction) => {
     const { body } = req;
-
-    // console.log("Body", body);
-    // console.log("Session", req.session);
-    // console.log("SessionID", req.session.id);
-    
 
     if (!req.session.currentChallengeOptions) {
         return next(new CustomError('Current challenge is missing', 400));
@@ -68,9 +62,7 @@ export const handleLoginFinish = async (req: Request, res: Response, next: NextF
         return next(new CustomError('Passkey not registered with this site', 404));
     }
 
-    // console.log("PK", (userPasskey as Credential).publicKeyUint8());
-
-    // try {
+    try {
         const authenticationResponse = {
             response: body,
             expectedChallenge: currentChallenge,
@@ -84,7 +76,6 @@ export const handleLoginFinish = async (req: Request, res: Response, next: NextF
             },
         };
         let verification = await verifyAuthenticationResponse(authenticationResponse);
-        // console.log("Verification", verification);
 
         const { verified, authenticationInfo } = verification;
 
@@ -93,16 +84,16 @@ export const handleLoginFinish = async (req: Request, res: Response, next: NextF
                 userPasskey.id,
                 authenticationInfo.newCounter
             );
-            res.send({verified: true, userId: user.id});
+            res.send({verified: true, userId: user.id, token: Auth.GetToken(user.id)});
         } else {
             next(new CustomError('Verification failed', 400));
         }
-    // } catch (error) {
-    //     next(error instanceof CustomError ? error : new CustomError('Internal Server Error' + error, 500));
-    // } finally {
-        // req.session.currentChallengeOptions = undefined;
-        // req.session.loggedInUser = undefined;
-    // }
+    } catch (error) {
+        next(error instanceof CustomError ? error : new CustomError('Internal Server Error' + error, 500));
+    } finally {
+        req.session.currentChallengeOptions = undefined;
+        req.session.loggedInUser = undefined;
+    }
 };
 
 export const handleLogout = async (req: Request, res: Response) => {

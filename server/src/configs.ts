@@ -18,7 +18,7 @@ export const corsOptions: CorsOptions = {
   origin: origin,
   credentials: true,
   optionsSuccessStatus: 200,
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE']
 };
 

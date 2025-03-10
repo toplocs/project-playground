@@ -11,12 +11,7 @@ import http from "http";
 
 import { corsOptions, cookieOptions, rpID, port, enable_https, certificate } from './configs';
 import { handleError } from './errors';
-
-// Routes
-import userRoutes from './routes/userRoutes';
-import passkeyRoutes from './routes/passkeyRoutes';
-import exampleRoutes from './routes/exampleRoutes';
-import profileRoutes from './routes/profileRoutes';
+import routes from './routes';
 
 const app = express();
 
@@ -34,7 +29,7 @@ app.use(
   session({
     store: new filestore({
       path: './data/sessions',
-      ttl: 600,
+      ttl: 60,
       retries: 0,
     }),
     secret: process.env.SESSION_SECRET || 'secret',
@@ -52,17 +47,14 @@ app.use(handleError);
 
 // Debug: Session Logging
 app.use(function (req, res, next) {
-  console.log("Route:", req.originalUrl);
-  console.log("SessionId:", req.sessionID);
-  console.log("Session Data:", req.session);
+  // console.log("Route:", req.originalUrl);
+  // console.log("SessionId:", req.sessionID);
+  // console.log("Session Data:", req.session);
   next()
 });
 
 // Routes
-app.use('/api/passkey', passkeyRoutes);
-app.use('/api/example', exampleRoutes);
-app.use('/api/profile', profileRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api', routes);
 
 // Serve static client
 const clientBuildPath = path.join(__dirname, '../../client/dist');

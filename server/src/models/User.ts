@@ -19,7 +19,6 @@ export default class UserModel {
 
     async getByIdWithProfiles(id: string) {
         const user = await this.getById(id);
-        console.log('User: ', user);
         if (!user) {
             return null;
         }
